@@ -27,6 +27,7 @@
       </select>
     </div>
     <div v-if="question.selectedType === 'TEXT'" class="mb-4">
+      <span>Required: </span>
       <select
         v-model="question.textType"
         class="border border-gray-300 p-2 rounded mr-1"
@@ -51,27 +52,28 @@
     >
       <div class="mb-4">
         <span class="block">Your answer choices</span>
-        <div
-          v-for="(answer, index) in question.answers"
-          :key="index"
-          class="flex items-center mb-2"
-        >
-          <input
-            type="text"
-            placeholder="Enter your answer choice"
-            v-model="question.answers[index]"
-            class="border border-gray-300 p-2 rounded w-[50%]"
-            required
-          />
-          <button
-            @click="removeAnswer(index)"
-            v-if="question.answers.length > 2"
-            class="ml-2 bg-red-500 text-white p-2 rounded"
+          <div
+            v-for="(_, index) in question.answers"
+            :key="index"
+            class="flex items-center mb-2"
           >
-            Remove
-          </button>
-        </div>
+            <input
+              type="text"
+              placeholder="Enter your answer choice"
+              v-model="question.answers[index]"
+              class="border border-gray-300 p-2 rounded w-[50%]"
+              required
+            />
+            <button
+              @click="removeAnswer(index)"
+              v-if="question.answers.length > 2"
+              class="ml-2 bg-red-500 text-white p-2 rounded"
+            >
+              Remove
+            </button>
+          </div>
       </div>
+      <span>Required: </span>
       <select
         v-model="question.requiredAns"
         class="border border-gray-300 p-2 rounded mr-1"

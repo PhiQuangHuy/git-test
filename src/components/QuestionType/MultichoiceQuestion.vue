@@ -1,25 +1,35 @@
 <template>
   <div class="items border border-gray-300 rounded my-4 p-4">
     <div class="flex justify-between items-center mb-4">
-      <h3 class="text-lg">Question {{ index + 1 }}: {{ question.question }}</h3>
-      <p class="text-sm">
-        Answer type: {{ question.type }}
-        {{ question.required === "true" ? "(required)" : "" }}
-      </p>
+      <h3 class="text-lg">
+        Question {{ index + 1 }}{{ question.required === "true" ? "*" : "" }}:
+        {{ question.question }}
+      </h3>
+      <p class="text-md">Answer type: {{ question.type }}</p>
     </div>
-    <h4 class="text-md">Answers:</h4>
+    <h4 class="block mb-2 text-md font-medium text-gray-900 dark:text-white">
+      Select one or more of the answers below
+    </h4>
     <ul class="list-none">
-      <li v-for="(answer, answerIndex) in question.answers" :key="answerIndex">
-        <label>
-          <input
-            :disabled="!isEditing"
-            type="checkbox"
-            :value="answer"
-            class="mr-2"
-            v-model="selectedAnswers"
-            @change="selectAnswer(answer, question.question)"
-          />{{ answer }}
-        </label>
+      <li
+        v-for="(answer, answerIndex) in question.answers"
+        :key="answerIndex"
+        class="flex items-center mb-2"
+      >
+        <input
+          :id="'question_' + index + answer"
+          :disabled="!isEditing"
+          type="checkbox"
+          :value="answer"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          v-model="selectedAnswers"
+          @change="selectAnswer(answer, question.question)"
+        />
+        <label
+          :for="'question_' + index + answer"
+          class="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+          >{{ answer }}</label
+        >
       </li>
     </ul>
     <button @click="toggleEdit" class="bg-blue-500 text-white p-2 rounded mr-2">
@@ -37,6 +47,7 @@
 
 <script setup>
 import { defineProps, ref, defineEmits } from "vue";
+import { FwbCheckbox } from "flowbite-vue";
 
 const emits = defineEmits(["updateAnswer"]);
 
@@ -59,6 +70,5 @@ const selectAnswer = (answer, question) => {
 const restartAnswers = () => {
   selectedAnswers.value = [];
   emits("updateAnswer", props.index, selectedAnswers.value);
-  console.log(selectedAnswers.value);
 };
 </script>

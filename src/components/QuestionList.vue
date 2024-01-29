@@ -10,10 +10,16 @@
       @updateAnswer="updateAnswer"
     />
   </div>
-  <button @click="submitSurvey" class="bg-green-500 text-white p-2 rounded">
-    Submit
-  </button>
-  <div>{{ requiredMessage }}</div>
+  <div class="text-red-600">{{ requiredMessage }}</div>
+  <div class="">
+    <button
+      @click="submitSurvey"
+      class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+      type="button"
+    >
+      Submit
+    </button>
+  </div>
 </template>
 
 <script setup>
@@ -22,7 +28,7 @@ import SinglechoiceQuestion from "./QuestionType/SinglechoiceQuestion.vue";
 import MultichoiceQuestion from "./QuestionType/MultichoiceQuestion.vue";
 import TextQuestion from "./QuestionType/TextQuestion.vue";
 
-const requiredMessage = ref("");
+const requiredMessage = ref(null);
 
 const props = defineProps({
   surveyQuestions: Object,
@@ -46,27 +52,41 @@ const getComponentType = (questionType) => {
   }
 };
 
-const submitSurvey = () => {
-  const response = props.surveyQuestions.questions.map(
-    ({ question, type, textType, required }, i) => ({
-      questionNo: i + 1,
-      question,
-      type,
-      required,
-      answer: answersForSurvey.answers[i] || null,
-    })
-  );
+const formatAndCheckResponse = (questions, answers) => {
+  const response = questions.map(({ question, type, required }, i) => ({
+    questionNo: i + 1,
+    question,
+    type,
+    required,
+    answer: answers[i] || null,
+  }));
+
+  response.forEach((el) => {
+    if (el.type === "MULTI_CHOICE" && (!el.answer || el.answer.length === 0)) {
+      el.answer = null;
+    }
+    el.required = el.required !== "false";
+  });
 
   const checkRequired = response.filter((item) => {
     if (item.type === "MULTI_CHOICE") {
-      return item.answer?.length === 0 || item.answer === null;
-    } else {
       return (
-        item.required === "true" &&
-        (item.answer === null || item.answer === undefined)
+        item.required === true &&
+        (item.answer?.length === 0 || item.answer === null)
       );
+    } else {
+      return item.required === true && item.answer === null;
     }
   });
+
+  return { response, checkRequired };
+};
+
+const submitSurvey = () => {
+  const { response, checkRequired } = formatAndCheckResponse(
+    props.surveyQuestions.questions,
+    answersForSurvey.answers
+  );
 
   if (checkRequired.length === 0) {
     const data = {
@@ -76,11 +96,11 @@ const submitSurvey = () => {
     };
 
     console.log(JSON.stringify(data, null, "\t"));
-    requiredMessage.value = "Your survey was successfully submitted";
+    requiredMessage.value = null;
   } else {
     const requiredQuestions = checkRequired.map((el) => el.questionNo);
     requiredMessage.value =
-      "You must fill out the following questions " +
+      "You must fill out the following questions: " +
       requiredQuestions.join(", ");
   }
 };

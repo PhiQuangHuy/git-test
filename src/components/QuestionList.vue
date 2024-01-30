@@ -35,7 +35,9 @@ const props = defineProps({
   state: Object,
 });
 
-const nullArray = [...Array(10)].map(() => null);
+const nullArray = [...Array(props.surveyQuestions.questions.length)].map(
+  () => null
+);
 
 const answersForSurvey = reactive({ answers: nullArray });
 
@@ -65,17 +67,16 @@ const formatAndCheckResponse = (questions, answers) => {
     if (el.type === "MULTI_CHOICE" && (!el.answer || el.answer.length === 0)) {
       el.answer = null;
     }
-    el.required = el.required !== "false";
+    // el.required = el.required !== "false";
   });
 
   const checkRequired = response.filter((item) => {
     if (item.type === "MULTI_CHOICE") {
       return (
-        item.required === true &&
-        (item.answer?.length === 0 || item.answer === null)
+        item.required && (item.answer?.length === 0 || item.answer === null)
       );
     } else {
-      return item.required === true && item.answer === null;
+      return item.required && item.answer === null;
     }
   });
 

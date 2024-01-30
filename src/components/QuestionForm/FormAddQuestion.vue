@@ -52,26 +52,26 @@
     >
       <div class="mb-4">
         <span class="block">Your answer choices</span>
-          <div
-            v-for="(_, index) in question.answers"
-            :key="index"
-            class="flex items-center mb-2"
+        <div
+          v-for="(_, index) in question.answers"
+          :key="index"
+          class="flex items-center mb-2"
+        >
+          <input
+            type="text"
+            placeholder="Enter your answer choice"
+            v-model="question.answers[index]"
+            class="border border-gray-300 p-2 rounded w-[50%]"
+            required
+          />
+          <button
+            @click="removeAnswer(index)"
+            v-if="question.answers.length > 2"
+            class="ml-2 bg-red-500 text-white p-2 rounded"
           >
-            <input
-              type="text"
-              placeholder="Enter your answer choice"
-              v-model="question.answers[index]"
-              class="border border-gray-300 p-2 rounded w-[50%]"
-              required
-            />
-            <button
-              @click="removeAnswer(index)"
-              v-if="question.answers.length > 2"
-              class="ml-2 bg-red-500 text-white p-2 rounded"
-            >
-              Remove
-            </button>
-          </div>
+            Remove
+          </button>
+        </div>
       </div>
       <span>Required: </span>
       <select
@@ -143,7 +143,7 @@ const saveQuestion = () => {
   const newQuestion = {
     question: question.questionDetail,
     type: question.selectedType,
-    required: question.requiredAns,
+    required: (question.requiredAns === "false" ? false : true),
   };
 
   if (question.selectedType === "TEXT") {

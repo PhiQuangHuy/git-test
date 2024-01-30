@@ -1,7 +1,7 @@
 <template>
   <div class="items border border-gray-300 rounded my-4 p-4">
     <div class="flex justify-between items-center mb-4">
-      <h3 class="text-lg">Question {{ index + 1 }}{{ question.required === "true" ? "*" : "" }}: {{ question.question }}</h3>
+      <h3 class="text-lg">Question {{ index + 1 }}{{ question.required  ? "*" : "" }}: {{ question.question }}</h3>
       <p class="text-md">
         Answer type: {{ question.type }}
         

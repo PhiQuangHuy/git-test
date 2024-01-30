@@ -28,19 +28,19 @@ const surveyQuestions = reactive({
     {
       question: "Enter your email",
       type: "TEXT",
-      required: "false",
+      required: false,
       textType: "short",
     },
     {
       question: "Single choice question",
       type: "SINGLE_CHOICE",
-      required: "false",
+      required: false,
       answers: ["Answer A", "Answer B", "Answer C", "Answer D"],
     },
     {
       question: "Multi choice question",
       type: "MULTI_CHOICE",
-      required: "false",
+      required: false,
       answers: ["Answer A", "Answer B", "Answer C", "Answer D"],
     },
   ],

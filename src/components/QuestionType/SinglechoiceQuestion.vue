@@ -5,49 +5,44 @@
         Question {{ index + 1 }}{{ question.required ? "*" : "" }}:
         {{ question.question }}
       </h3>
-      <p class="text-md">Answer type: {{ question.type }}</p>
+      <p class="text-sm">Answer type: {{ question.type }}</p>
     </div>
-    <h4 class="block mb-2 text-md font-medium text-gray-900 dark:text-white">
+    <h4 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
       Select answer below
     </h4>
-    <ul class="list-none">
+    <ul class="border-none list-none">
       <li
         v-for="(answer, answerIndex) in question.answers"
         :key="answerIndex"
         class="flex items-center mb-2"
       >
-        <input
+        <fwb-radio
           :id="'question_' + index + answer"
           :disabled="!isEditing"
-          type="radio"
           :name="'question_' + index"
           :value="answer"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           v-model="selectedAnswer"
+          :label="answer"
         />
-        <label
-          :for="'question_' + index + answer"
-          class="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
-          >{{ answer }}</label
-        >
       </li>
     </ul>
-    <button @click="toggleEdit" class="bg-blue-500 text-white p-2 rounded mr-2">
+    <fwb-button @click="toggleEdit" color="blue" class="mr-1">
       {{ isEditing ? "Save" : "Edit" }}
-    </button>
-    <button
-      v-if="isEditing"
-      @click="restartAnswer"
-      class="bg-red-500 text-white p-2 rounded"
-    >
+    </fwb-button>
+    <fwb-button color="red" v-if="isEditing" @click="restartAnswer">
       Restart
-    </button>
+    </fwb-button>
   </div>
 </template>
 
 <script setup>
 import { defineProps, ref, watch, defineEmits } from "vue";
-import { FwbRadio } from "flowbite-vue";
+import {
+  FwbRadio,
+  FwbButton,
+  FwbListGroup,
+  FwbListGroupItem,
+} from "flowbite-vue";
 
 const emits = defineEmits(["updateAnswer"]);
 

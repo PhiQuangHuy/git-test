@@ -43,6 +43,12 @@ const surveyQuestions = reactive({
       required: false,
       answers: ["Answer A", "Answer B", "Answer C", "Answer D"],
     },
+    {
+      question: "Required quesiton",
+      type: "TEXT",
+      required: true,
+      textType: "long",
+    },
   ],
 });
 

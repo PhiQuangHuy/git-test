@@ -1,6 +1,7 @@
 <template>
   <div class="list-wrapper" v-if="props.surveyQuestions.questions.length !== 0">
-    <h2 class="text-2xl font-bold">SURVEY QUESTION LIST</h2>
+    <fwb-heading tag="h1" class="text-3xl">SURVEY QUESTION LIST</fwb-heading>
+    <p>Description for survey</p>
     <component
       :is="getComponentType(question.type)"
       v-for="(question, index) in props.surveyQuestions.questions"
@@ -11,14 +12,8 @@
     />
   </div>
   <div class="text-red-600">{{ requiredMessage }}</div>
-  <div class="">
-    <button
-      @click="submitSurvey"
-      class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-      type="button"
-    >
-      Submit
-    </button>
+  <div>
+    <fwb-button gradient="green-blue" @click="submitSurvey">Submit</fwb-button>
   </div>
 </template>
 
@@ -27,6 +22,7 @@ import { defineProps, reactive, ref } from "vue";
 import SinglechoiceQuestion from "./QuestionType/SinglechoiceQuestion.vue";
 import MultichoiceQuestion from "./QuestionType/MultichoiceQuestion.vue";
 import TextQuestion from "./QuestionType/TextQuestion.vue";
+import { FwbHeading, FwbButton } from "flowbite-vue";
 
 const requiredMessage = ref(null);
 

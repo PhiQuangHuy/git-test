@@ -5,16 +5,16 @@
         Question {{ index + 1 }}{{ question.required ? "*" : "" }}:
         {{ question.question }}
       </h3>
-      <p class="text-md">Answer type: {{ question.type }}</p>
+      <p class="text-sm">Answer type: {{ question.type }}</p>
     </div>
-    <h4 class="block mb-2 text-md font-medium text-gray-900 dark:text-white">
+    <h4 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
       Select one or more of the answers below
     </h4>
     <ul class="list-none">
       <li
         v-for="(answer, answerIndex) in question.answers"
         :key="answerIndex"
-        class="flex items-center mb-2"
+        class="flex items-center"
       >
         <input
           :id="'question_' + index + answer"
@@ -27,27 +27,23 @@
         />
         <label
           :for="'question_' + index + answer"
-          class="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 m-3"
           >{{ answer }}</label
         >
       </li>
     </ul>
-    <button @click="toggleEdit" class="bg-blue-500 text-white p-2 rounded mr-2">
+    <fwb-button @click="toggleEdit" color="blue" class="mr-1">
       {{ isEditing ? "Save" : "Edit" }}
-    </button>
-    <button
-      v-if="isEditing"
-      @click="restartAnswers"
-      class="bg-red-500 text-white p-2 rounded"
-    >
+    </fwb-button>
+    <fwb-button color="red" v-if="isEditing" @click="restartAnswers">
       Restart
-    </button>
+    </fwb-button>
   </div>
 </template>
 
 <script setup>
 import { defineProps, ref, defineEmits } from "vue";
-import { FwbCheckbox } from "flowbite-vue";
+import { FwbButton } from "flowbite-vue";
 
 const emits = defineEmits(["updateAnswer"]);
 

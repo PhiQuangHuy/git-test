@@ -1,54 +1,52 @@
 <template>
   <div class="items border border-gray-300 rounded my-4 p-4">
     <div class="flex justify-between items-center mb-4">
-      <h3 class="text-lg">Question {{ index + 1 }}{{ question.required  ? "*" : "" }}: {{ question.question }}</h3>
-      <p class="text-md">
-        Answer type: {{ question.type }}
-        
-      </p>
+      <h3 class="text-lg">
+        Question {{ index + 1 }}{{ question.required ? "*" : "" }}:
+        {{ question.question }}
+      </h3>
+      <p class="text-sm">Answer type: {{ question.type }}</p>
     </div>
     <div class="mt-2">
-      <label
-        :for="'question_' + index"
-        class="block mb-2 text-md font-medium text-gray-900 dark:text-white"
-        >Enter your answer</label
-      >
-      <input
-        v-if="question.textType === 'short'"
-        :readonly="!isEditing"
-        type="text"
-        v-model="editedText"
-        @input="updateAnswer"
-        :id="'question_' + index"
-        placeholder="Enter your answer"
-        class="bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      />
-      <textarea
+      <div class="relative" v-if="question.textType === 'short'">
+        <input
+          type="text"
+          :readonly="!isEditing"
+          v-model="editedText"
+          @input="updateAnswer"
+          :id="'question_' + index"
+          class="mb-2 block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=""
+        />
+        <label
+          :for="'question_' + index"
+          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          >Enter your answer</label
+        >
+      </div>
+
+      <fwb-textarea
+        label="Enter your answer"
         v-if="question.textType === 'long'"
         :readonly="!isEditing"
         type="text"
-        class="block p-2.5 w-full text-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 mb-2 dark:focus:border-blue-500"
         v-model="editedText"
-        :id="'question_' + index + answer"
-
-        placeholder="Enter your answer"
+        class="mb-1"
+        placeholder="Your answer"
         @input="updateAnswer"
       />
     </div>
-    <button @click="toggleEdit" class="bg-blue-500 text-white p-2 rounded mr-2">
+    <fwb-button @click="toggleEdit" color="blue" class="mr-1">
       {{ isEditing ? "Save" : "Edit" }}
-    </button>
-    <button
-      v-if="isEditing"
-      @click="restartAnswer"
-      class="bg-red-500 text-white p-2 rounded"
+    </fwb-button>
+    <fwb-button v-if="isEditing" @click="restartAnswer" color="red"
+      >Restart</fwb-button
     >
-      Restart
-    </button>
   </div>
 </template>
 
 <script setup>
+import { FwbButton, FwbTextarea } from "flowbite-vue";
 import { defineProps, ref, defineEmits } from "vue";
 
 const props = defineProps({

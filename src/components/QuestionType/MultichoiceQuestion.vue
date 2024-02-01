@@ -18,12 +18,11 @@
       >
         <input
           :id="'question_' + index + answer"
-          :disabled="!isEditing"
           type="checkbox"
           :value="answer"
           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
           v-model="selectedAnswers"
-          @change="selectAnswer(answer, question.question)"
+          @change="selectAnswer"
         />
         <label
           :for="'question_' + index + answer"
@@ -31,18 +30,29 @@
           >{{ answer }}</label
         >
       </li>
+      <li v-if="question.other">
+        <input
+          :id="'question_' + Number(question.answers.length) + '_'"
+          type="checkbox"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          v-model="selectedAnswers"
+          @change="selectAnswer"
+          :value="otherAnswer"
+        />
+        <input
+          type="text"
+          v-model="otherAnswer"
+          class="mb-2 px-2.5 pb-2.5 pt-4 ml-2 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder="Enter other answer"
+        />
+      </li>
     </ul>
-    <fwb-button @click="toggleEdit" color="blue" class="mr-1">
-      {{ isEditing ? "Save" : "Edit" }}
-    </fwb-button>
-    <fwb-button color="red" v-if="isEditing" @click="restartAnswers">
-      Restart
-    </fwb-button>
+    <fwb-button color="red" @click="restartAnswers"> Restart </fwb-button>
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref, defineEmits } from "vue";
+import { defineProps, ref, defineEmits, watch } from "vue";
 import { FwbButton } from "flowbite-vue";
 
 const emits = defineEmits(["updateAnswer"]);
@@ -52,15 +62,20 @@ const props = defineProps({
   index: Number,
 });
 
-const isEditing = ref(true);
+const otherAnswer = ref("");
+
+watch(otherAnswer, (newValue, oldValue) => {
+  const index = selectedAnswers.value.indexOf(oldValue);
+  if (index !== -1) {
+    selectedAnswers.value.splice(index, 1);
+  }
+});
+
 const selectedAnswers = ref([]);
 
-const toggleEdit = () => {
-  isEditing.value = !isEditing.value;
-};
-
-const selectAnswer = (answer, question) => {
+const selectAnswer = () => {
   emits("updateAnswer", props.index, selectedAnswers.value);
+  console.log(selectedAnswers.value);
 };
 
 const restartAnswers = () => {

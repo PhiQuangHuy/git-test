@@ -11,7 +11,6 @@
       <div class="relative" v-if="question.textType === 'short'">
         <input
           type="text"
-          :readonly="!isEditing"
           v-model="editedText"
           @input="updateAnswer"
           :id="'question_' + index"
@@ -28,7 +27,6 @@
       <fwb-textarea
         label="Enter your answer"
         v-if="question.textType === 'long'"
-        :readonly="!isEditing"
         type="text"
         v-model="editedText"
         class="mb-1"
@@ -36,12 +34,8 @@
         @input="updateAnswer"
       />
     </div>
-    <fwb-button @click="toggleEdit" color="blue" class="mr-1">
-      {{ isEditing ? "Save" : "Edit" }}
-    </fwb-button>
-    <fwb-button v-if="isEditing" @click="restartAnswer" color="red"
-      >Restart</fwb-button
-    >
+
+    <fwb-button @click="restartAnswer" color="red">Restart</fwb-button>
   </div>
 </template>
 
@@ -56,13 +50,8 @@ const props = defineProps({
 
 const emits = defineEmits(["updateAnswer"]);
 
-const isEditing = ref(true);
 const editedText = ref("");
 const originalAnswer = null;
-
-const toggleEdit = () => {
-  isEditing.value = !isEditing.value;
-};
 
 const restartAnswer = () => {
   editedText.value = originalAnswer;

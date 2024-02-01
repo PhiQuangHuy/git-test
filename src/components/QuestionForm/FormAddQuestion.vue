@@ -81,6 +81,14 @@
         <option value="true">Yes</option>
         <option value="false">No</option>
       </select>
+      <span>Other: </span>
+      <select
+        v-model="question.other"
+        class="border border-gray-300 p-2 rounded mr-1"
+      >
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
       <button
         @click="addAnotherAnswer"
         class="bg-green-500 text-white p-2 rounded w-[40%] mr-2"
@@ -106,6 +114,7 @@ const initialState = {
   answers: null,
   textType: null,
   requiredAns: "false",
+  other: "false",
 };
 
 const question = reactive({ ...initialState });
@@ -143,7 +152,8 @@ const saveQuestion = () => {
   const newQuestion = {
     question: question.questionDetail,
     type: question.selectedType,
-    required: (question.requiredAns === "false" ? false : true),
+    required: question.requiredAns === "false" ? false : true,
+    other: question.other === "false" ? false : true,
   };
 
   if (question.selectedType === "TEXT") {

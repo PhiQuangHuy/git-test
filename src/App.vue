@@ -1,5 +1,5 @@
 <template>
-  <style-wrapper>
+  <style-wrapper v-if="fetchStatus">
     <form-title :state="state" />
     <form-add-question @add-question="addQuestion" />
     <button @click="showQuestions" class="bg-green-500 text-white p-2 rounded">
@@ -16,7 +16,20 @@ import FormTitle from "./components/QuestionForm/FormTitle.vue";
 import FormAddQuestion from "./components/QuestionForm/FormAddQuestion.vue";
 import QuestionList from "./components/QuestionList.vue";
 import StyleWrapper from "./components/StyleWrapper.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
+import axios from "axios";
+
+const fetchStatus = ref(true);
+const getSurveyQuestions = async () => {
+  try {
+    const data = await axios.get("http://10.124.1.67:8080/api/v1/survey/list");
+    console.log(data.data);
+  } catch (error) {
+    fetchStatus.value = false;
+  }
+};
+
+getSurveyQuestions();
 
 const state = reactive({
   formTitle: "",
@@ -36,18 +49,14 @@ const surveyQuestions = reactive({
       type: "SINGLE_CHOICE",
       required: false,
       answers: ["Answer A", "Answer B", "Answer C", "Answer D"],
+      other: true,
     },
     {
       question: "Multi choice question",
       type: "MULTI_CHOICE",
       required: false,
       answers: ["Answer A", "Answer B", "Answer C", "Answer D"],
-    },
-    {
-      question: "Required quesiton",
-      type: "TEXT",
-      required: true,
-      textType: "long",
+      other: true,
     },
   ],
 });

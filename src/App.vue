@@ -47,7 +47,7 @@ const surveyQuestions = reactive({
     {
       question: "Single choice question",
       type: "SINGLE_CHOICE",
-      required: true,
+      required: false,
       answers: ["Answer A", "Answer B", "Answer C", "Answer D"],
       other: true,
     },

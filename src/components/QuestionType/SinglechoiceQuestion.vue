@@ -35,7 +35,7 @@
         <input
           type="text"
           v-model="otherAnswer"
-          class="mb-2 px-2.5 pb-2.5 pt-4 ml-2 text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="ml-2 mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 inline-block w-[50%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Enter other answer"
           @input="updateOtherAns"
         />
@@ -66,8 +66,8 @@ const restartAnswer = () => {
   emits("updateAnswer", props.index, selectedAnswer.value);
 };
 
-watch(selectedAnswer, (newValue) => {
-  emits("updateAnswer", props.index, selectedAnswer.value);
+watch(selectedAnswer, () => {
+  emits("updateAnswer", props.index, selectedAnswer.value?.trim());
 });
 
 const updateOtherAns = () => {
@@ -76,7 +76,7 @@ const updateOtherAns = () => {
 
 watch(otherAnswer, () => {
   if (selectedAnswer.value === otherAnswer.value) {
-    emits("updateAnswer", props.index, selectedAnswer.value);
+    emits("updateAnswer", props.index, selectedAnswer.value?.trim());
   }
 });
 </script>

@@ -8,7 +8,7 @@
       <p class="text-sm">Answer type: {{ question.type }}</p>
     </div>
     <div class="mt-2">
-      <div class="relative" v-if="question.textType === 'short'">
+      <div class="relative" v-if="question.type === 'SHORT'">
         <input
           type="text"
           v-model.trim="editedText"
@@ -26,7 +26,7 @@
 
       <fwb-textarea
         label="Enter your answer"
-        v-if="question.textType === 'long'"
+        v-if="question.type === 'LONG'"
         type="text"
         v-model.trim="editedText"
         class="mb-1"

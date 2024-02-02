@@ -17,19 +17,19 @@ import FormAddQuestion from "./components/QuestionForm/FormAddQuestion.vue";
 import QuestionList from "./components/QuestionList.vue";
 import StyleWrapper from "./components/StyleWrapper.vue";
 import { reactive, ref } from "vue";
-// import axios from "axios";
+import axios from "axios";
 
-// const fetchStatus = ref(true);
-// const getSurveyQuestions = async () => {
-//   try {
-//     const data = await axios.get("http://10.124.1.67:8080/api/v1/survey/list");
-//     console.log(data.data);
-//   } catch (error) {
-//     fetchStatus.value = false;
-//   }
-// };
+const fetchStatus = ref(true);
+const getSurveyQuestions = async () => {
+  try {
+    const data = await axios.get("http://10.124.1.67:8080/api/v1/survey/list");
+    console.log(data.data);
+  } catch (error) {
+    fetchStatus.value = false;
+  }
+};
 
-// getSurveyQuestions();
+getSurveyQuestions();
 
 const state = reactive({
   formTitle: "",
@@ -40,9 +40,8 @@ const surveyQuestions = reactive({
   questions: [
     {
       question: "Enter your email",
-      type: "TEXT",
+      type: "SHORT",
       required: false,
-      textType: "short",
     },
     {
       question: "Single choice question",
@@ -57,6 +56,11 @@ const surveyQuestions = reactive({
       required: false,
       answers: ["Answer A", "Answer B", "Answer C", "Answer D"],
       other: true,
+    },
+    {
+      question: "Enter your email",
+      type: "LONG",
+      required: false,
     },
   ],
 });

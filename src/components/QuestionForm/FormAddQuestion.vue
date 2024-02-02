@@ -26,15 +26,13 @@
         </option>
       </select>
     </div>
-    <div v-if="question.selectedType === 'TEXT'" class="mb-4">
+    <div
+      v-if="
+        question.selectedType === 'LONG' || question.selectedType === 'SHORT'
+      "
+      class="mb-4"
+    >
       <span>Required: </span>
-      <select
-        v-model="question.textType"
-        class="border border-gray-300 p-2 rounded mr-1"
-      >
-        <option value="long">Long</option>
-        <option value="short">Short</option>
-      </select>
       <select
         v-model="question.requiredAns"
         class="border border-gray-300 p-2 rounded mr-1"
@@ -137,9 +135,10 @@ const addAnotherAnswer = () => {
 };
 
 const questionTypes = [
-  { value: "TEXT", label: "Text Input" },
-  { value: "SINGLE_CHOICE", label: "Single choice" },
-  { value: "MULTI_CHOICE", label: "Multi choices" },
+  { value: "SHORT", label: "Short Text" },
+  { value: "SHORT", label: "Long Text" },
+  { value: "SINGLE_CHOICE", label: "Singlechoice" },
+  { value: "MULTI_CHOICE", label: "Multichoices" },
 ];
 
 const removeAnswer = (index) => {
@@ -156,8 +155,8 @@ const saveQuestion = () => {
     other: question.other === "false" ? false : true,
   };
 
-  if (question.selectedType === "TEXT") {
-    newQuestion.textType = question.textType;
+  if (question.selectedType === "LONG" || question.selectedType === "SHORT") {
+    delete newQuestion.other;
   } else {
     newQuestion.answers = question.answers;
   }

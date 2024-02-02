@@ -43,7 +43,8 @@ const getComponentType = (questionType) => {
       return SinglechoiceQuestion;
     case "MULTI_CHOICE":
       return MultichoiceQuestion;
-    case "TEXT":
+    case "SHORT":
+    case "LONG":
       return TextQuestion;
     default:
       return null;

@@ -1,19 +1,26 @@
 <template>
   <div class="list-wrapper" v-if="props.surveyQuestions.questions.length !== 0">
-    <fwb-heading tag="h1" class="text-3xl">SURVEY QUESTION LIST</fwb-heading>
-    <p>Description for survey</p>
-    <component
-      :is="getComponentType(question.type)"
-      v-for="(question, index) in props.surveyQuestions.questions"
-      :key="index"
-      :question="question"
-      :index="index"
-      @updateAnswer="updateAnswer"
-    />
-  </div>
-  <div class="text-red-600">{{ requiredMessage }}</div>
-  <div>
-    <fwb-button gradient="green-blue" @click="submitSurvey">Submit</fwb-button>
+    <div class="w-full bg-blue-800 h-20"></div>
+    <div class="p-5">
+      <h1 class="w-full outline-none border-b-2 border-gray-200 text-2xl mb-2">
+        SURVEY QUESTION LIST
+      </h1>
+      <p w-full outline-none border-b-2>Description for survey</p>
+    </div>
+    <div class="flex flex-col p-5">
+      <component
+        :is="getComponentType(question.type)"
+        v-for="(question, index) in props.surveyQuestions.questions"
+        :key="index"
+        :question="question"
+        :index="index"
+        @updateAnswer="updateAnswer"
+      />
+      <div class="text-red-600">{{ requiredMessage }}</div>
+      <div>
+        <fwb-button color="default" @click="submitSurvey">Submit</fwb-button>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -1,12 +1,15 @@
 <template>
-  <div class="items border border-gray-300 rounded my-4 p-4">
+  <div
+    class="max-w-[45rem] p-4 rounded-md my-2 shadow-md first:mt-4 border-2 border-gray-200"
+  >
     <div class="flex justify-between items-center mb-4">
-      <h3 class="text-lg">
+      <p class="text-md my-1">
         Question {{ index + 1 }}{{ question.required ? "*" : "" }}:
         {{ question.question }}
-      </h3>
+      </p>
       <p class="text-sm">Answer type: {{ question.type }}</p>
     </div>
+    <div class="border-b border-gray-200 my-2"></div>
     <h4 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
       Select answer below
     </h4>
@@ -42,7 +45,9 @@
       </li>
     </ul>
 
-    <fwb-button color="red" @click="restartAnswer"> Restart </fwb-button>
+    <fwb-button color="default" size="sm" outline @click="restartAnswer">
+      Restart
+    </fwb-button>
   </div>
 </template>
 

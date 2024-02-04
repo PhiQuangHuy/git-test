@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <style-wrapper>
     <form-title :state="state" />
     <form-add-question @add-question="addQuestion" />
@@ -16,11 +16,11 @@
 </template>
 
 <script setup>
-import FormTitle from "./components/QuestionForm/FormTitle.vue";
-import FormAddQuestion from "./components/QuestionForm/FormAddQuestion.vue";
-import QuestionList from "./components/QuestionList.vue";
-import StyleWrapper from "./components/StyleWrapper.vue";
-import { reactive, ref } from "vue";
+import FormTitle from "../components/QuestionForm/FormTitle.vue";
+import FormAddQuestion from "../components/QuestionForm/FormAddQuestion.vue";
+import QuestionList from "../components/QuestionList.vue";
+import StyleWrapper from "../components/StyleWrapper.vue";
+import { reactive } from "vue";
 // import axios from "axios";
 
 // const fetchStatus = ref(true);
@@ -75,17 +75,4 @@ const addQuestion = (newQuestion) => {
 
 const showQuestions = () =>
   console.log(JSON.stringify(surveyQuestions.questions, null, "\t"));
-</script> -->
-<template>
-  <questions-page />
-</template>
-
-<script>
-import QuestionsPage from "./pages/QuestionsPage.vue";
-
-export default {
-  components: {
-    "questions-page": QuestionsPage,
-  },
-};
 </script>

@@ -4,10 +4,10 @@
   >
     <div class="flex justify-between items-center mb-4">
       <p class="text-md my-1">
-        Question {{ index + 1 }}{{ question.required ? "*" : "" }}:
-        {{ question.question }}
+        Question {{ index + 1 }}{{ question.elRequired ? "*" : "" }}:
+        {{ question.elLabel }}
       </p>
-      <p class="text-sm">Answer type: {{ question.type }}</p>
+      <p class="text-sm">Answer type: {{ question.elType }}</p>
     </div>
     <div class="border-b border-gray-200 my-2"></div>
     <h4 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -15,7 +15,7 @@
     </h4>
     <ul class="border-none list-none">
       <li
-        v-for="(answer, answerIndex) in question.answers"
+        v-for="(answer, answerIndex) in question.option"
         :key="answerIndex"
         class="flex items-center mb-2"
       >
@@ -27,7 +27,7 @@
           :label="answer"
         />
       </li>
-      <li v-if="question.other">
+      <li v-if="question.elOther">
         <input
           :id="'question_' + index + '_other'"
           type="radio"

@@ -5,7 +5,7 @@
       <input
         type="text"
         class="form-title w-full text-2xl font-bold border outline-none p-2 border-gray-300 rounded"
-        v-model="state.formTitle"
+        v-model="title.formTitle"
         required
       />
     </div>
@@ -14,7 +14,7 @@
       <textarea
         type="text"
         class="form-title w-full text-2xl font-bold border outline-none p-2 border-gray-300 rounded"
-        v-model="state.formDescription"
+        v-model="title.formDescription"
         required
       />
     </div>
@@ -25,6 +25,6 @@
 import { defineProps } from "vue";
 
 const props = defineProps({
-  state: Object,
+  title: Object,
 });
 </script>

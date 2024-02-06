@@ -9,13 +9,14 @@
     </div>
     <div class="flex flex-col p-5">
       <component
-        :is="getComponentType(question.type)"
+        :is="getComponentType(question.elType)"
         v-for="(question, index) in props.surveyQuestions.questions"
         :key="index"
         :question="question"
         :index="index"
         @updateAnswer="updateAnswer"
       />
+
       <div class="text-red-600">{{ requiredMessage }}</div>
       <div>
         <fwb-button color="default" @click="submitSurvey">Submit</fwb-button>
@@ -29,13 +30,13 @@ import { defineProps, reactive, ref } from "vue";
 import SinglechoiceQuestion from "./QuestionType/SinglechoiceQuestion.vue";
 import MultichoiceQuestion from "./QuestionType/MultichoiceQuestion.vue";
 import TextQuestion from "./QuestionType/TextQuestion.vue";
-import { FwbHeading, FwbButton } from "flowbite-vue";
+import { FwbButton } from "flowbite-vue";
 
 const requiredMessage = ref(null);
 
 const props = defineProps({
   surveyQuestions: Object,
-  state: Object,
+  title: Object,
 });
 
 const nullArray = [...Array(props.surveyQuestions.questions.length)].map(
@@ -46,9 +47,9 @@ const answersForSurvey = reactive({ answers: nullArray });
 
 const getComponentType = (questionType) => {
   switch (questionType) {
-    case "SINGLE_CHOICE":
+    case "RADIO":
       return SinglechoiceQuestion;
-    case "MULTI_CHOICE":
+    case "CHECKBOX":
       return MultichoiceQuestion;
     case "SHORT":
     case "LONG":
@@ -59,30 +60,33 @@ const getComponentType = (questionType) => {
 };
 
 const formatAndCheckResponse = (questions, answers) => {
-  const response = questions.map(({ question, type, required }, i) => ({
+  console.log(questions);
+  const response = questions.map(({ elRequired, formElId, elType }, i) => ({
     questionNo: i + 1,
-    question,
-    type,
-    required,
+    elRequired,
+    formElId,
+    elType,
     answer: answers[i] || null,
   }));
+  console.log(response);
 
   response.forEach((el) => {
-    if (el.type === "MULTI_CHOICE" && (!el.answer || el.answer.length === 0)) {
+    if (el.elType === "CHECKBOX" && (!el.answer || el?.answer.length === 0)) {
       el.answer = null;
     }
-    // el.required = el.required !== "false";
   });
 
   const checkRequired = response.filter((item) => {
-    if (item.type === "MULTI_CHOICE") {
+    if (item.elType === "CHECKBOX") {
+      console.log(item);
       return (
-        item.required && (item.answer?.length === 0 || item.answer === null)
+        item.elRequired && (item.answer?.length === 0 || item.answer === null)
       );
     } else {
-      return item.required && item.answer === null;
+      return item.elRequired && item.answer === null;
     }
   });
+  console.log(checkRequired);
 
   return { response, checkRequired };
 };
@@ -94,10 +98,15 @@ const submitSurvey = () => {
   );
 
   if (checkRequired.length === 0) {
+    const content = response.map(({ answer, formElId , elType}) => ({
+      formElId,
+      elType,
+      answer,
+    }));
     const data = {
-      formTitle: props.state.formTitle,
-      formDesc: props.state.formDescription,
-      data: [...response],
+      formTitle: props.title.formTitle,
+      formDesc: props.title.formDescription,
+      data: [...content],
     };
 
     console.log(JSON.stringify(data, null, "\t"));

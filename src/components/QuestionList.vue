@@ -121,5 +121,6 @@ const submitSurvey = () => {
 
 const updateAnswer = (index, answer) => {
   answersForSurvey.answers[index] = answer;
+  console.log(answersForSurvey.answers)
 };
 </script>

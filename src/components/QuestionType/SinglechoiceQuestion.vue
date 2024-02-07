@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div
     class="max-w-[45rem] p-4 rounded-md my-2 shadow-md first:mt-4 border-2 border-gray-200"
   >
@@ -75,16 +75,6 @@ watch(selectedAnswer, () => {
   emits("updateAnswer", props.index, selectedAnswer.value?.trim());
 });
 
-// const updateOtherAns = () => {
-//   selectedAnswer.value = otherAnswer.value;
-// };
-
-// watch(otherAnswer, () => {
-//   if (selectedAnswer.value === otherAnswer.value) {
-//     emits("updateAnswer", props.index, selectedAnswer.value?.trim());
-//   }
-// });
-
 watch(otherAnswer, () => {
   if (!otherAnswer.value) {
     selectedAnswer.value = null;
@@ -97,12 +87,20 @@ watch(otherAnswer, () => {
 const isOtherAnsEmpty = computed(() => {
   return otherAnswer.value === "";
 });
-</script>
+</script> -->
 
-<!-- <template>
-  <QuestionContainer :question="question" :index="index" @restart="restartAnswer">
+<template>
+  <QuestionContainer
+    :question="question"
+    :index="index"
+    @restart="restartAnswer"
+  >
     <ul class="border-none list-none">
-      <li v-for="(answer, answerIndex) in question.option" :key="answerIndex" class="flex items-center mb-2">
+      <li
+        v-for="(answer, answerIndex) in question.option"
+        :key="answerIndex"
+        class="flex items-center mb-2"
+      >
         <fwb-radio
           :id="'question_' + index + answer"
           :name="'question_' + index"
@@ -132,8 +130,8 @@ const isOtherAnsEmpty = computed(() => {
 </template>
 
 <script setup>
-import { defineProps, ref, computed, defineEmits } from "vue";
-import QuestionContainer from "@/components/QuestionContainer.vue";
+import { defineProps, ref, computed, defineEmits, watch } from "vue";
+import QuestionContainer from "./QuestionContainer.vue";
 import { FwbRadio } from "flowbite-vue";
 
 const props = defineProps({
@@ -155,4 +153,17 @@ const restartAnswer = () => {
 const isOtherAnsEmpty = computed(() => {
   return otherAnswer.value === "";
 });
-</script> -->
+
+watch(selectedAnswer, () => {
+  emits("updateAnswer", props.index, selectedAnswer.value?.trim());
+});
+
+watch(otherAnswer, () => {
+  if (!otherAnswer.value) {
+    selectedAnswer.value = null;
+  } else if (selectedAnswer.value !== otherAnswer.value) {
+    selectedAnswer.value = otherAnswer.value.trim();
+    emits("updateAnswer", props.index, selectedAnswer.value);
+  }
+});
+</script>

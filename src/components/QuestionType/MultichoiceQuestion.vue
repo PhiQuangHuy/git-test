@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div
     class="max-w-[45rem] p-4 rounded-md my-2 shadow-md first:mt-4 border-2 border-gray-200"
   >
@@ -104,9 +104,9 @@ watch(otherAnswer, () => {
   }
   emits("updateAnswer", props.index, selectedAnswers.value);
 });
-</script>
+</script> -->
 
-<!-- <template>
+<template>
   <QuestionContainer :question="question" :index="index" @restart="restartAnswer">
     <ul class="list-none">
       <li v-for="(answer, answerIndex) in question.option" :key="answerIndex" class="flex items-center">
@@ -142,7 +142,7 @@ watch(otherAnswer, () => {
 
 <script setup>
 import { defineProps, ref, defineEmits } from "vue";
-import QuestionContainer from "@/components/QuestionContainer.vue";
+import QuestionContainer from "./QuestionContainer.vue";
 
 const props = defineProps({
   question: Object,
@@ -167,4 +167,4 @@ const restartAnswer = () => {
   otherAnswer.value = "";
   emits("updateAnswer", props.index, selectedAnswers.value);
 };
-</script> -->
+</script>

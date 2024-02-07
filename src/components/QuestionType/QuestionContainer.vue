@@ -19,6 +19,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
+import { FwbButton } from "flowbite-vue";
 
 const props = defineProps({
   question: Object,

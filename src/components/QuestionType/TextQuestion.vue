@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div
     class="max-w-[45rem] p-4 rounded-md my-2 shadow-md first:mt-4 border-2 border-gray-200"
   >
@@ -64,9 +64,9 @@ const restartAnswer = () => {
 const updateAnswer = () => {
   emits("updateAnswer", props.index, editedText.value);
 };
-</script>
+</script> -->
 
-<!-- <template>
+<template>
   <QuestionContainer
     :question="question"
     :index="index"
@@ -102,7 +102,8 @@ const updateAnswer = () => {
 
 <script setup>
 import { defineProps, ref, defineEmits } from "vue";
-import QuestionContainer from "@/components/QuestionContainer.vue";
+import QuestionContainer from "./QuestionContainer.vue";
+import { FwbTextarea } from "flowbite-vue";
 
 const props = defineProps({
   question: Object,
@@ -121,4 +122,4 @@ const restartAnswer = () => {
   editedText.value = "";
   emits("updateAnswer", props.index, editedText.value);
 };
-</script> -->
+</script>

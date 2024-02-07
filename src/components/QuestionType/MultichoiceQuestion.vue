@@ -107,9 +107,17 @@ watch(otherAnswer, () => {
 </script> -->
 
 <template>
-  <QuestionContainer :question="question" :index="index" @restart="restartAnswer">
+  <QuestionContainer
+    :question="question"
+    :index="index"
+    @restart="restartAnswer"
+  >
     <ul class="list-none">
-      <li v-for="(answer, answerIndex) in question.option" :key="answerIndex" class="flex items-center">
+      <li
+        v-for="(answer, answerIndex) in question.option"
+        :key="answerIndex"
+        class="flex items-center"
+      >
         <input
           :id="'question_' + index + answer"
           type="checkbox"
@@ -118,7 +126,11 @@ watch(otherAnswer, () => {
           v-model="selectedAnswers"
           @change="selectAnswer"
         />
-        <label :for="'question_' + index + answer" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 m-3">{{ answer }}</label>
+        <label
+          :for="'question_' + index + answer"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 m-3"
+          >{{ answer }}</label
+        >
       </li>
       <li v-if="question.elOther">
         <input
@@ -141,7 +153,7 @@ watch(otherAnswer, () => {
 </template>
 
 <script setup>
-import { defineProps, ref, defineEmits } from "vue";
+import { defineProps, ref, defineEmits, watch } from "vue";
 import QuestionContainer from "./QuestionContainer.vue";
 
 const props = defineProps({
@@ -155,6 +167,7 @@ const otherAnswer = ref("");
 const emits = defineEmits(["updateAnswer"]);
 
 const selectAnswer = () => {
+  // emits("updateAnswer", props.index, selectedAnswers.value);
   if (otherAnswer.value === "") {
     const nonEmptyAnswer = selectedAnswers.value.filter((ans) => ans !== "");
     selectedAnswers.value = nonEmptyAnswer;
@@ -167,4 +180,27 @@ const restartAnswer = () => {
   otherAnswer.value = "";
   emits("updateAnswer", props.index, selectedAnswers.value);
 };
+
+watch(otherAnswer, (newValue, oldValue) => {
+  if (otherAnswer.value === "") {
+    console.log(otherAnswer.value === "");
+    const nonEmptyAnswer = selectedAnswers.value.filter(
+      (ans) => ans !== oldValue
+    );
+    console.log(nonEmptyAnswer);
+    selectedAnswers.value = nonEmptyAnswer;
+  }
+  emits("updateAnswer", props.index, selectedAnswers.value);
+});
+
+watch(otherAnswer, (newValue, oldValue) => {
+  const index = selectedAnswers.value.indexOf(oldValue);
+  if (index !== -1) {
+    // selectedAnswers.value.splice(index, 1);
+    selectedAnswers.value[index] = newValue;
+  }
+  if (newValue === "") {
+    selectedAnswers.value[index] = newValue;
+  }
+});
 </script>

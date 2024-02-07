@@ -43,7 +43,7 @@ const closeModal = () => {
 
 const fetchData = async () => {
   try {
-    const data = await instance.get("/api/v1/survey/9");
+    const data = await instance.get("/api/v1/survey/11");
     return data.data;
   } catch (error) {
     console.log(error);

@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: () => import("@/App.vue"),
+      component: () => import("@/layout/FormLayout.vue"),
       children: [
         { path: "", component: () => import("@/pages/QuestionsPage.vue") },
         { path: "success", component: () => import("@/pages/SuccessPage.vue") },

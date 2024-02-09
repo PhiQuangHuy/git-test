@@ -1,11 +1,10 @@
 <template>
   <div v-if="props.surveyQuestions.questions.length !== 0">
-    <div class="w-full bg-blue-800 h-20"></div>
     <div class="p-5">
       <h1 class="w-full outline-none border-b-2 border-gray-200 text-2xl mb-2">
-        SURVEY QUESTION LIST
+        {{ title.formTitle }}
       </h1>
-      <p w-full outline-none border-b-2>Description for survey</p>
+      <p w-full outline-none border-b-2>{{ title.formDescription }}</p>
     </div>
     <div class="flex flex-col p-5">
       <component

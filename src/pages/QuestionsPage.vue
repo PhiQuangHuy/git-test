@@ -7,11 +7,7 @@
     </button>
   </style-wrapper> -->
 
-  <div
-    class="sm:w-[40rem] flex flex-col sm:border sm:border-gray-300 sm:rounded-md sm:m-auto sm:shadow-2xl bg-white overflow-hidden"
-  >
-    <question-list :surveyQuestions="surveyQuestions" :title="title" />
-  </div>
+  <question-list :surveyQuestions="surveyQuestions" :title="title" />
 
   <fwb-modal v-if="isError" @close="closeModal">
     <template #header> Fail to fetch data!!! Something went wrong. </template>
@@ -57,8 +53,8 @@ const setFormContent = (titleSur, description, content) => {
 onMounted(async () => {
   // const formData = await fetchData();
   const formData = {
-    titleSur: "Surver Title",
-    description: "Surver Description",
+    titleSur: "Survey Title",
+    description: "Survey Description",
     content: [
       {
         elLabel: "Question Title",

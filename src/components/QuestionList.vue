@@ -78,7 +78,6 @@ const formatAndCheckResponse = (questions, answers) => {
 
   const checkRequired = response.filter((item) => {
     if (item.elType === "CHECKBOX") {
-      console.log(item);
       return (
         item.elRequired && (item.answer?.length === 0 || item.answer === null)
       );
@@ -86,7 +85,6 @@ const formatAndCheckResponse = (questions, answers) => {
       return item.elRequired && item.answer === null;
     }
   });
-  console.log(checkRequired);
 
   return { response, checkRequired };
 };
@@ -98,7 +96,7 @@ const submitSurvey = () => {
   );
 
   if (checkRequired.length === 0) {
-    const content = response.map(({ answer, formElId , elType}) => ({
+    const content = response.map(({ answer, formElId, elType }) => ({
       formElId,
       elType,
       answer,
@@ -121,6 +119,5 @@ const submitSurvey = () => {
 
 const updateAnswer = (index, answer) => {
   answersForSurvey.answers[index] = answer;
-  console.log(answersForSurvey.answers)
 };
 </script>

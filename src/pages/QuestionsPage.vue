@@ -58,7 +58,35 @@ const setFormContent = (titleSur, description, content) => {
 };
 
 onMounted(async () => {
-  const formData = await fetchData();
+  // const formData = await fetchData();
+  const formData = {
+    titleSur: "Surver Title",
+    description: "Surver Description",
+    content: [
+      {
+        elLabel: "Question Title",
+        elType: "LONG",
+        elRequired: false,
+        formElId: 1,
+      },
+      {
+        elLabel: "Question Title",
+        elType: "CHECKBOX",
+        elRequired: true,
+        formElId: 2,
+        option: ["Answer 1", "Answer 2", "Answer 3"],
+        elOther: true,
+      },
+      {
+        elLabel: "Question Title",
+        elType: "RADIO",
+        elRequired: false,
+        formElId: 3,
+        option: ["Answer 1", "Answer 2", "Answer 3"],
+        elOther: true,
+      },
+    ],
+  };
   const { titleSur, description, content } = formData;
   setFormContent(titleSur, description, content);
 });

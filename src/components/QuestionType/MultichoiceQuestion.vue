@@ -183,11 +183,9 @@ const restartAnswer = () => {
 
 watch(otherAnswer, (newValue, oldValue) => {
   if (otherAnswer.value === "") {
-    console.log(otherAnswer.value === "");
     const nonEmptyAnswer = selectedAnswers.value.filter(
       (ans) => ans !== oldValue
     );
-    console.log(nonEmptyAnswer);
     selectedAnswers.value = nonEmptyAnswer;
   }
   emits("updateAnswer", props.index, selectedAnswers.value);
@@ -196,7 +194,6 @@ watch(otherAnswer, (newValue, oldValue) => {
 watch(otherAnswer, (newValue, oldValue) => {
   const index = selectedAnswers.value.indexOf(oldValue);
   if (index !== -1) {
-    // selectedAnswers.value.splice(index, 1);
     selectedAnswers.value[index] = newValue;
   }
   if (newValue === "") {

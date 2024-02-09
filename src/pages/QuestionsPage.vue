@@ -6,25 +6,22 @@
       Show questions
     </button>
   </style-wrapper> -->
-  <style-wrapper v-if="surveyQuestions.questions?.length > 0">
-    <div
-      class="sm:w-[40rem] flex flex-col sm:border sm:border-gray-300 sm:rounded-md sm:m-auto sm:shadow-2xl bg-white overflow-hidden"
-    >
-      <question-list :surveyQuestions="surveyQuestions" :title="title" />
-    </div>
-  </style-wrapper>
+
+  <div
+    class="sm:w-[40rem] flex flex-col sm:border sm:border-gray-300 sm:rounded-md sm:m-auto sm:shadow-2xl bg-white overflow-hidden"
+  >
+    <question-list :surveyQuestions="surveyQuestions" :title="title" />
+  </div>
+
   <fwb-modal v-if="isError" @close="closeModal">
     <template #header> Fail to fetch data!!! Something went wrong. </template>
   </fwb-modal>
 </template>
 
 <script setup>
-import FormTitle from "../components/QuestionForm/FormTitle.vue";
-import FormAddQuestion from "../components/QuestionForm/FormAddQuestion.vue";
-import QuestionList from "../components/QuestionList.vue";
-import StyleWrapper from "../components/StyleWrapper.vue";
+import QuestionList from "@/components/QuestionList/QuestionList.vue";
 import { reactive, onMounted, ref } from "vue";
-import instance from "../service/instance";
+import instance from "@/service/instance";
 import { FwbModal } from "flowbite-vue";
 
 const title = reactive({

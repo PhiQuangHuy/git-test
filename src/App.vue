@@ -1,13 +1,5 @@
 <template>
-  <questions-page />
+  <div class="w-screen min-h-screen bg-gray-200 p-2">
+    <router-view></router-view>
+  </div>
 </template>
-
-<script>
-import QuestionsPage from "./pages/QuestionsPage.vue";
-
-export default {
-  components: {
-    "questions-page": QuestionsPage,
-  },
-};
-</script>

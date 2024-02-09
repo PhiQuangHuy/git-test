@@ -1,5 +1,5 @@
 <template>
-  <div class="list-wrapper" v-if="props.surveyQuestions.questions.length !== 0">
+  <div v-if="props.surveyQuestions.questions.length !== 0">
     <div class="w-full bg-blue-800 h-20"></div>
     <div class="p-5">
       <h1 class="w-full outline-none border-b-2 border-gray-200 text-2xl mb-2">
@@ -27,9 +27,10 @@
 
 <script setup>
 import { defineProps, reactive, ref } from "vue";
-import SinglechoiceQuestion from "./QuestionType/SinglechoiceQuestion.vue";
-import MultichoiceQuestion from "./QuestionType/MultichoiceQuestion.vue";
-import TextQuestion from "./QuestionType/TextQuestion.vue";
+import router from "@/router/index";
+import SinglechoiceQuestion from "@/components/QuestionList/QuestionType/SinglechoiceQuestion.vue";
+import MultichoiceQuestion from "@/components/QuestionList/QuestionType/MultichoiceQuestion.vue";
+import TextQuestion from "@/components/QuestionList/QuestionType/TextQuestion.vue";
 import { FwbButton } from "flowbite-vue";
 
 const requiredMessage = ref(null);
@@ -39,11 +40,9 @@ const props = defineProps({
   title: Object,
 });
 
-const nullArray = [...Array(props.surveyQuestions.questions.length)].map(
-  () => null
-);
-
-const answersForSurvey = reactive({ answers: nullArray });
+const answersForSurvey = reactive({
+  answers: Array(props.surveyQuestions.questions.length).fill(null),
+});
 
 const getComponentType = (questionType) => {
   switch (questionType) {
@@ -109,6 +108,7 @@ const submitSurvey = () => {
 
     console.log(JSON.stringify(data, null, "\t"));
     requiredMessage.value = null;
+    router.push("/success");
   } else {
     const requiredQuestions = checkRequired.map((el) => el.questionNo);
     requiredMessage.value =

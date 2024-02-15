@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import QuestionList from "@/components/QuestionList/QuestionList.vue";
+import QuestionList from "@/components/QuestionList/index.vue";
 import { reactive, onMounted, ref } from "vue";
 import instance from "@/service/instance";
 import { FwbModal } from "flowbite-vue";
